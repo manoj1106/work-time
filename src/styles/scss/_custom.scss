@@ -1,0 +1,62 @@
+// Here you can add other styles
+// custom root properties
+:root {
+  --bg-opacity-1: 1;
+  --bg-opacity-0: 0;
+  --white: #ffffff;
+  --primary-dark: #2e19e6;
+  --primary-dark-rgb: rgba(46, 25, 230);
+  --header-bg-secondary-dark: #3c4b64;
+  --secondary-dark-rgb: rgba(0, 0, 21, 0.2);
+}
+
+#page {
+  margin: 0;
+}
+
+.text-error {
+  color: var(--cui-red) !important;
+}
+
+.min-height-50px {
+  min-height: 50px !important;
+}
+
+/**
+text alignment css properties
+*/
+.text-align-center {
+  text-align: center !important;
+}
+
+// backgrounds
+
+.bg-primary-dark {
+  background-color: var(--primary-dark-rgb) !important;
+}
+
+.bg-header-secondary {
+  background-color: var(--header-bg-secondary-dark) !important;
+}
+
+.bg-header-secondary-dark {
+  background-color: var(--secondary-dark-rgb) !important;
+}
+
+.bg-header-secondary .header-toggler {
+  color: var(--white) !important;
+}
+
+.nav-link {
+  cursor: pointer !important;
+}
+
+// btn css
+button.btn {
+  cursor: pointer !important;
+}
+
+button.btn-success,
+button.btn-danger {
+  color: var(--white) !important;
+}
