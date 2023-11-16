@@ -14,7 +14,7 @@ const Home = (props: HomeProps) => {
   const [loading, setLoading] = useState(true);
 
   if (typeof window === 'undefined') {
-    router.push('/');
+    router.replace('/');
   }
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Home = (props: HomeProps) => {
       setLoading(false);
     }
     if (!session) {
-      router.push('/');
+      router.replace('/');
     }
   };
 
@@ -41,8 +41,8 @@ const Home = (props: HomeProps) => {
       <div className='wrapper d-flex flex-column min-vh-100 bg-light'>
         <Header avatar='' />
         <main className='body flex-grow-1 px-3'>{props.children}</main>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

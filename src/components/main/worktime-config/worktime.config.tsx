@@ -8,11 +8,11 @@ import { CButton, CCol, CForm, CRow } from '@coreui/react';
 import { WorktimeConfigValidator } from '@/_helpers/validation/worktime.validator';
 import { saveWorktimeConfig } from '@/client/service-wrapper/worktime.service';
 import { ApiResponse } from '@/_helpers/api/response.model';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Message from '@/components/widgets/message/message';
+import NotificationContext from '@/context/notification/notification';
 
 const WorktimeConfig = () => {
-  const [response, setResponse] = useState<ApiResponse>();
   const {
     inputs,
     errors,
@@ -22,15 +22,23 @@ const WorktimeConfig = () => {
     handleDailyHoursBlur,
     handleWorktimeConfigReset,
   } = useWorktimeConfig();
+
+  const notificationCtx = useContext(NotificationContext);
+
   const handleWorktimeConfigSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    setResponse(undefined);
+
     const worktimeConfigValidator = container.resolve(WorktimeConfigValidator);
     if (worktimeConfigValidator.validateInputs(inputs, setErrors)) {
       const response: ApiResponse = await saveWorktimeConfig(inputs);
-      setResponse(response);
+      notificationCtx.notify(response.notify, response.type, response.msg);
     }
   };
+
+  const reset = () => {
+    handleWorktimeConfigReset();
+  };
+
   return (
     <Card
       headers={{
@@ -140,15 +148,10 @@ const WorktimeConfig = () => {
               color='danger'
               className='px-4'
               type='button'
-              onClick={handleWorktimeConfigReset}
+              onClick={reset}
             >
               Reset
             </CButton>
-          </CCol>
-        </CRow>
-        <CRow className='pt-4 pb-4'>
-          <CCol xs={12}>
-            <Message response={response} />
           </CCol>
         </CRow>
       </CForm>

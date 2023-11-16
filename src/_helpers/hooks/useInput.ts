@@ -11,7 +11,7 @@ export const useInput = (initialInputs: any = {}) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const required = e.target.attributes.getNamedItem('required');
-    const placeholder = e.target.attributes.getNamedItem('placeholder').value;
+    const placeholder = e.target.attributes.getNamedItem('placeholder')?.value;
     // value is required
     if (required) {
       let error = '';

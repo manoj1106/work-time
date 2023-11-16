@@ -5,11 +5,12 @@ import {
   CInputGroup,
 } from '@coreui/react';
 import { Fragment } from 'react';
+import FormLabel from '../form-label/form-label';
 
 interface InputProps {
   id: string;
   label: string;
-  type: string;
+  type?: string;
   placeholder: string;
   name: string;
   value: any;
@@ -22,16 +23,11 @@ interface InputProps {
 const Input = (props: InputProps) => {
   return (
     <Fragment>
-      {props.label && (
-        <CFormLabel htmlFor={props.id} className='text-dark'>
-          <span>{props.label}</span>&nbsp;
-          {props.required && <strong className='text-danger'>*</strong>}
-        </CFormLabel>
-      )}
+      <FormLabel id={props.id} required={props.required} label={props.label} />
       <CInputGroup className='mb-3 has-validation'>
         <CFormInput
           id={props.id}
-          type={props.type}
+          type={props.type ? props.type : 'text'}
           placeholder={props.placeholder}
           autoComplete={props.id}
           name={props.name}

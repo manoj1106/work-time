@@ -18,7 +18,7 @@ interface CardProps {
 }
 const Card = (props: CardProps) => {
   return (
-    <CCard>
+    <CCard className='m-2 mb-4'>
       {props.headers && (
         <CCardHeader>
           {props.headers.title && (
