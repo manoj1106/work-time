@@ -1,8 +1,9 @@
-import { Fragment, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import FormLabel from '../form-label/form-label';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './date-picker.scss';
+import { CFormFeedback, CFormInput, CInputGroup } from '@coreui/react';
 
 interface CustomDatePickerProps {
   id: string;
@@ -14,6 +15,7 @@ interface CustomDatePickerProps {
   onChange: (date: any, e: any) => void;
   dateFormat: string;
   isClearable?: boolean;
+  error?: string;
 }
 
 interface InputProps {
@@ -33,21 +35,40 @@ const CustomDatePicker = (props: CustomDatePickerProps) => {
     name,
     ...rest
   } = props;
-
+  const inputId = `input_${id}`;
   const DatePickerInput = forwardRef((inputProps: InputProps, ref: any) => (
-    <div
-      className='input-group mb-3 has-validation'
-      onClick={inputProps.onClick}
-    >
-      <input
-        className='form-control datepicker-icon'
+    // <div
+    //   className='input-group mb-3 has-validation'
+    //   onClick={inputProps.onClick}
+    // >
+    //   <input
+    //     className='form-control datepicker-icon'
+    //     value={inputProps.value}
+    //     onChange={inputProps.onChange}
+    //     ref={ref}
+    //     placeholder={placeholder}
+    //     readOnly={true}
+    //   ></input>
+    //   {props.error && <CFormFeedback invalid>{props.error}</CFormFeedback>}
+    // </div>
+
+    <CInputGroup className='mb-3 has-validation'>
+      <CFormInput
+        className='datepicker-icon'
+        id={inputId}
+        type='text'
+        placeholder={props.placeholder}
+        autoComplete={props.id}
+        name={props.name}
         value={inputProps.value}
         onChange={inputProps.onChange}
-        ref={ref}
-        placeholder={placeholder}
+        required={props.required}
+        onClick={inputProps.onClick}
         readOnly={true}
-      ></input>
-    </div>
+        {...(props.error && { invalid: true })}
+      />
+      {props.error && <CFormFeedback invalid>{props.error}</CFormFeedback>}
+    </CInputGroup>
   ));
 
   return (

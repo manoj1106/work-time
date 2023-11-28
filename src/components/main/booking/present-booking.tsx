@@ -7,6 +7,7 @@ import { CCol, CRow } from '@coreui/react';
 
 interface PresentBookingProps {
   inputs: NewBooking;
+  errors?: any;
   handleChange: (e: any) => void;
   setInputs: (inputs: any) => void;
 }
@@ -40,6 +41,7 @@ const PresentBooking = (props: PresentBookingProps) => {
           onChange={handlePresentDateSelect}
           selectedDate={selectedDate}
           dateFormat={format}
+          error={props.errors?.date}
           {...props}
         />
       </CCol>
@@ -53,6 +55,7 @@ const PresentBooking = (props: PresentBookingProps) => {
           placeholder='From Time'
           required={true}
           type='time'
+          error={props.errors?.fromTime}
         />
       </CCol>
       <CCol sm={12} md={4} lg={3}>
@@ -65,6 +68,7 @@ const PresentBooking = (props: PresentBookingProps) => {
           placeholder='To Time'
           required={true}
           type='time'
+          error={props.errors?.toTime}
         />
       </CCol>
       <CCol sm={12} md={4} lg={3}>
@@ -75,8 +79,8 @@ const PresentBooking = (props: PresentBookingProps) => {
           onChange={props.handleChange}
           value={props.inputs.breakTime}
           placeholder='Break Time'
-          required={true}
           type='time'
+          error={props.errors?.breakTime}
         />
       </CCol>
     </CRow>

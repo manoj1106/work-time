@@ -23,6 +23,7 @@ const BookingTypes = (props: BookingTypesProps) => {
           setInputs={props.setInputs}
           inputs={props.inputs}
           handleChange={props.onChange}
+          errors={props.errors}
         />
       );
     case TimesheetType.PUBLIC_HOLIDAY:
