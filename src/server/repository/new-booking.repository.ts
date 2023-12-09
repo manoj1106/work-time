@@ -1,6 +1,6 @@
 import { NewBooking } from '@/_helpers/models/new-booking.model';
 
-export interface IPresentTypeRepository {
+export interface INewBookingRepository {
   /**
    *
    * @param id id of the document stored in database
@@ -24,7 +24,7 @@ export interface IPresentTypeRepository {
    * @returns booking saved booking object with id
    *
    */
-  savePresentTypeBooking(booking: NewBooking): Promise<NewBooking>;
+  saveBooking(booking: NewBooking): Promise<NewBooking>;
 
   /**
    *
@@ -33,8 +33,5 @@ export interface IPresentTypeRepository {
    * @returns booking updated booking object
    *
    */
-  updatePresentTypeBooking(
-    id: string,
-    booking: NewBooking
-  ): Promise<NewBooking>;
+  updateBooking(id: string, booking: NewBooking): Promise<NewBooking>;
 }

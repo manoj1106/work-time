@@ -1,9 +1,4 @@
-import {
-  CFormFeedback,
-  CFormInput,
-  CFormLabel,
-  CInputGroup,
-} from '@coreui/react';
+import { CFormFeedback, CFormInput, CInputGroup } from '@coreui/react';
 import { Fragment } from 'react';
 import FormLabel from '../form-label/form-label';
 

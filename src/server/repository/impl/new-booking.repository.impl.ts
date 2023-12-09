@@ -1,12 +1,13 @@
-import { NewBooking } from '@/_helpers/models/new-booking.model';
-import { IPresentTypeRepository } from '../present.type.repository';
 import { autoInjectable } from 'tsyringe';
+import { INewBookingRepository } from '../new-booking.repository';
 import { DBRepository } from './db.repository.impl';
+import { NewBooking } from '@/_helpers/models/new-booking.model';
 import { TimesheetType } from '@/_helpers/enums/timesheet.type';
+import { ServerConsts } from '@/server/consts/server.consts';
 
 @autoInjectable()
-export class PresentTypeBookingRepository implements IPresentTypeRepository {
-  private readonly BOOKINGS_COLLECTION = 'bookings';
+export class NewBookingRepository implements INewBookingRepository {
+  private readonly BOOKINGS_COLLECTION = ServerConsts.BOOKINGS_COLLECTION;
   private dbRepository: DBRepository;
 
   public constructor(dbRepository: DBRepository) {
@@ -45,7 +46,7 @@ export class PresentTypeBookingRepository implements IPresentTypeRepository {
     return booking;
   };
 
-  savePresentTypeBooking = async (booking: NewBooking): Promise<NewBooking> => {
+  saveBooking = async (booking: NewBooking): Promise<NewBooking> => {
     const result = await this.dbRepository.saveDoc(
       this.BOOKINGS_COLLECTION,
       booking
@@ -57,7 +58,7 @@ export class PresentTypeBookingRepository implements IPresentTypeRepository {
     throw new Error('Something went wrong while saving the booking');
   };
 
-  updatePresentTypeBooking = async (
+  updateBooking = async (
     id: string,
     booking: NewBooking
   ): Promise<NewBooking> => {
@@ -70,6 +71,6 @@ export class PresentTypeBookingRepository implements IPresentTypeRepository {
       booking.id = id;
       return booking;
     }
-    throw new Error('Something went wrong while saving the booking');
+    throw new Error('Something went wrong while updating the booking');
   };
 }

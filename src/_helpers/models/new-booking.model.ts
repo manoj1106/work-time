@@ -18,4 +18,7 @@ export interface NewBooking {
   actualWorkingHours?: number;
   extraWorkingTime?: string;
   extraWorkingHours?: number;
+  comment?: string;
+  createdOn?: string;
+  updatedOn?: string;
 }

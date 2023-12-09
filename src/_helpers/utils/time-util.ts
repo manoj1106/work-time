@@ -1,7 +1,7 @@
 import { RegexValidator } from './regex.validator';
 import { StringUtils } from './string.utils';
 import { _24HOUR_TIME_FORMAT } from '../consts/regex.consts';
-import { DEFAULT_CIPHERS } from 'tls';
+import { DateUtils } from './date-utils';
 
 export class TimeUtils {
   public static readonly SEC: number = 1000;
@@ -51,8 +51,8 @@ export class TimeUtils {
     let h = Math.floor(decimalTime / (60 * 60));
     decimalTime = decimalTime - h * 60 * 60;
     const m = Math.floor(decimalTime / 60);
-    const hours = h < 9 ? `0${h}` : h;
-    const minutes = m < 9 ? `0${m}` : m;
+    const hours = DateUtils.formatDateTime(h);
+    const minutes = DateUtils.formatDateTime(m);
     const convertedTime = `${hours}:${minutes}`;
     return convertedTime;
   };
@@ -83,8 +83,8 @@ export class TimeUtils {
     var hours = Math.floor(diff / this.HRS);
     diff -= hours * this.HRS;
     var minutes = Math.floor(diff / this.MIN);
-    const hrsStr = hours < 9 ? `0${hours}` : hours;
-    const minutesStr = minutes < 9 ? `0${minutes}` : minutes;
+    const hrsStr = DateUtils.formatDateTime(hours);
+    const minutesStr = DateUtils.formatDateTime(minutes);
     const time = `${hrsStr}:${minutesStr}`;
     return time;
   };
@@ -115,8 +115,8 @@ export class TimeUtils {
    *
    */
   public static getTimeFromDate = (d: Date) => {
-    const h = d.getHours() < 9 ? `0${d.getHours()}` : d.getHours();
-    const m = d.getMinutes() < 9 ? `0${d.getMinutes()}` : d.getMinutes();
+    const h = DateUtils.formatDateTime(d.getHours());
+    const m = DateUtils.formatDateTime(d.getMinutes());
     const time = `${h}:${m}`;
     return time;
   };

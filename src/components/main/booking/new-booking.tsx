@@ -12,6 +12,7 @@ import BookingTypes from './booking-types';
 import { NewBookingValidator } from '@/_helpers/validation/new-booking.validator';
 import { saveNewBooking } from '@/client/service-wrapper/new-booking.service';
 import { StringUtils } from '@/_helpers/utils/string.utils';
+import TextArea from '@/components/widgets/text-area/text-area';
 
 const headers = {
   title: 'New Booking',
@@ -43,9 +44,14 @@ const NewBooking = () => {
     handleResetInput(initialNewBooking);
   };
 
+  /**
+   *
+   * @param e react form event
+   * handling saving of the new booking
+   */
   const handleNewBookingSave = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    // validating inputs before saving to database
     if (newBookingValidator.validateInputs(inputs, setErrors)) {
       console.log('There are no errors. Good to go !!!');
       const response = await saveNewBooking(inputs);
@@ -76,6 +82,18 @@ const NewBooking = () => {
           errors={errors}
           onChange={handleInputChange}
         />
+        <CRow>
+          <CCol sm={12} md={6} lg={6}>
+            <TextArea
+              id='comment'
+              label='Comment'
+              value={inputs.comment}
+              name='comment'
+              placeholder='Comment'
+              onChange={handleInputChange}
+            />
+          </CCol>
+        </CRow>
         {inputs.type && (
           <CRow className='mt-4'>
             <CCol sm={6} md={4} lg={3}>

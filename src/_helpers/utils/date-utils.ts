@@ -8,6 +8,26 @@ export class DateUtils {
   public static readonly MMDDYYYY_SLASH = 'MM/dd/yyyy';
   public static readonly DDMMYYYY_DOT = 'dd.MM.yyyy';
 
+  public static formatDateTime = (num: number): string => {
+    const formattedStr = (num < 10 ? '0' : '') + num;
+    return formattedStr;
+  };
+
+  public static now = (): string => {
+    const now = new Date();
+    // day of month
+    const d = this.formatDateTime(now.getDate());
+    // month starts with number 0 for Jan so adding 1 to it to make Jan as 1 and Dec as 12
+    const mon = now.getMonth() + 1;
+    const m = this.formatDateTime(mon);
+    const y = now.getFullYear();
+    const h = this.formatDateTime(now.getHours());
+    const mi = this.formatDateTime(now.getMinutes());
+    const s = this.formatDateTime(now.getSeconds());
+    const nowStr = `${d}-${m}-${y} ${h}:${m}:${s}`;
+    return nowStr;
+  };
+
   public static getFormattedDate = (d: Date) => {
     return this.getFormattedDateWith(this.DDMMYYYY_HIPHAN, d);
   };
