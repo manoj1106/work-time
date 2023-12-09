@@ -11,9 +11,8 @@ export const initialNewBooking: NewBooking = {
   toDate: '',
   fromTime: '',
   toTime: '',
-  totalTime: '',
-  totalHrs: '',
   breakTime: '',
+  comment: '',
 };
 
 export const useNewBooking = () => {

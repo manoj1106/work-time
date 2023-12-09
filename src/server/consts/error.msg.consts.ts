@@ -5,6 +5,8 @@ export class ErrorMsg {
     'Default Worktime Config could not be found in system. Please create default configuration first';
   public static readonly WORKTIME_CONFIG_DAILY_HOURS_EMPTY_MSG =
     'Default Worktime Config Daily Target Hours are not set';
+  public static readonly WORKTIME_CONFIG_VACATION_HOURS_EMPTY_MSG =
+    'Default Worktime Config Vacation Hours are not set';
   // new bookings error msg
   public static readonly BOOKING_TYPE_EMPTY_MSG =
     'Booking type is not provided in request';

@@ -15,9 +15,12 @@ import { NumberUtils } from '@/_helpers/utils/number.utils';
 import { NewBookingRepository } from '@/server/repository/impl/new-booking.repository.impl';
 import { ErrorMsg } from '@/server/consts/error.msg.consts';
 import { MsgConsts } from '@/server/consts/msg.consts';
+import { IPublicHolidayTypeBookingService } from '../public-holiday.type.service';
 
 @injectable()
-export class PresentTypeService implements IPresentTypeService {
+export class PublicHolidayTypeBookingService
+  implements IPublicHolidayTypeBookingService
+{
   private responseHandler: ResponseHandler;
   private newBookingRepository: NewBookingRepository;
   private worktimeRepository: WorktimeRepository;
@@ -31,24 +34,23 @@ export class PresentTypeService implements IPresentTypeService {
     this.newBookingRepository = newBookingRepository;
     this.worktimeRepository = worktimeRepository;
   }
-
   /**
    *
    * @param booking booking object that needs to be saved to database
    * @returns apiResposne
    *
    */
-  public savePresentTypeBooking = async (
+  public savePublicHolidayTypeBooking = async (
     booking: NewBooking
   ): Promise<ApiResponse> => {
-    console.log('savePresentTypeBooking() - saving present type booking');
-    this.validatePresentTypeBooking(booking);
+    console.log('savePublicHolidayTypeBooking() - saving present type booking');
+    this.validatePublicHolidayTypeBooking(booking);
     const worktimeConfig = await this.worktimeRepository.findWorktimeConfig();
     if (!worktimeConfig) {
       throw new Error(ErrorMsg.WORKTIME_CONFIG_EMPTY_MSG);
     }
-    if (!worktimeConfig.dailyTargetHours) {
-      throw new Error(ErrorMsg.WORKTIME_CONFIG_DAILY_HOURS_EMPTY_MSG);
+    if (!worktimeConfig.vacationHours) {
+      throw new Error(ErrorMsg.WORKTIME_CONFIG_VACATION_HOURS_EMPTY_MSG);
     }
     // the id
     const existingBooking = await this.newBookingRepository.findBooking(
@@ -56,6 +58,7 @@ export class PresentTypeService implements IPresentTypeService {
       booking.date
     );
     const now = DateUtils.now();
+
     if (!StringUtils.isEmptyObject(existingBooking)) {
       // booking already found.. needs to be updated
       const bookingToUpdate = this.getBooking(booking, worktimeConfig);
@@ -87,19 +90,11 @@ export class PresentTypeService implements IPresentTypeService {
     return this.responseHandler.getDefaultErrorResponse();
   };
 
-  private validatePresentTypeBooking = (booking: NewBooking) => {
+  private validatePublicHolidayTypeBooking = (booking: NewBooking) => {
     if (StringUtils.isNullOrUndefined(booking.type)) {
       throw new Error(ErrorMsg.BOOKING_TYPE_EMPTY_MSG);
-    } else if (booking.type && TimesheetType.PRESENT !== booking.type) {
+    } else if (booking.type && TimesheetType.PUBLIC_HOLIDAY !== booking.type) {
       throw new Error(ErrorMsg.BOOKING_TYPE_INVALID_MSG);
-    } else if (StringUtils.isBlank(booking.fromTime)) {
-      throw new Error(ErrorMsg.FROM_TIME_EMPTY_MSG);
-    } else if (!TimeUtils.isTimeValid(booking.fromTime)) {
-      throw new Error(ErrorMsg.FROM_TIME_INVALID_MSG);
-    } else if (StringUtils.isBlank(booking.toTime)) {
-      throw new Error(ErrorMsg.TO_TIME_EMPTY_MSG);
-    } else if (!TimeUtils.isTimeValid(booking.toTime)) {
-      throw new Error(ErrorMsg.TO_TIME_INVALID_MSG);
     }
   };
 
@@ -107,45 +102,19 @@ export class PresentTypeService implements IPresentTypeService {
     booking: NewBooking,
     worktimeConfig: WorktimeConfig
   ): NewBooking => {
-    const fromTime = booking.fromTime;
-    const toTime = booking.toTime;
     const parsedDate = DateUtils.parseDate(booking.date);
     const year = parsedDate.getFullYear();
     const month = DateUtils.getFullMonth(parsedDate.getMonth());
-    const breakTime = TimeUtils.getTime(booking.breakTime);
-    const breakTimeHrs = TimeUtils.convertTimeToHours(breakTime);
-    const workingTime = TimeUtils.getTimeDifference(fromTime, toTime);
-    const workingTimeHrs = TimeUtils.convertTimeToHours(workingTime);
-    const actualWorkingTime = TimeUtils.getTimeDifference(
-      breakTime,
-      workingTime
-    );
-    const actualWorkingHours = TimeUtils.convertTimeToHours(actualWorkingTime);
-
-    const dailyHours = worktimeConfig.dailyTargetHours;
-
-    const extraWorkingHours = NumberUtils.subtracton(
-      actualWorkingHours,
-      dailyHours
-    );
-    const extraWorkingTime = TimeUtils.convertHoursToTime(extraWorkingHours);
+    const actualWorkingHours = +worktimeConfig.vacationHours;
+    const actualWorkingTime = TimeUtils.convertHoursToTime(actualWorkingHours);
 
     const doc: NewBooking = {
       month: month,
       year: year,
       date: booking.date,
       type: booking.type,
-      fromTime: fromTime,
-      toTime: toTime,
-      breakTime: breakTime,
-      breakTimeHrs: breakTimeHrs,
-      workingTime: workingTime,
-      workingTimeHrs: workingTimeHrs,
       actualWorkingTime: actualWorkingTime,
       actualWorkingHours: actualWorkingHours,
-      extraWorkingTime: extraWorkingTime,
-      extraWorkingHours: extraWorkingHours,
-      comment: booking.comment,
     };
     return doc;
   };
