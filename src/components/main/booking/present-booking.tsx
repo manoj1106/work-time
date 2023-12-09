@@ -4,6 +4,7 @@ import { DateUtils } from '@/_helpers/utils/date-utils';
 import CustomDatePicker from '@/components/widgets/date-picker/date-picker';
 import Input from '@/components/widgets/input/input';
 import { CCol, CRow } from '@coreui/react';
+import { useEffect } from 'react';
 
 interface PresentBookingProps {
   inputs: NewBooking;
@@ -16,6 +17,16 @@ const format = DateUtils.DDMMYYYY_HIPHAN;
 
 const PresentBooking = (props: PresentBookingProps) => {
   const { selectedDate, handleDateChange } = useDatepicker();
+
+  useEffect(() => {
+    const formattedDate = DateUtils.getFormattedDateWith(format, selectedDate);
+    props.setInputs((currentInputs: any) => {
+      return {
+        ...currentInputs,
+        date: formattedDate,
+      };
+    });
+  }, []);
 
   const handlePresentDateSelect = (date: Date, e: any) => {
     e.preventDefault();

@@ -81,4 +81,19 @@ export class ResponseHandler {
     };
     return apiResponse;
   };
+
+  /**
+   *
+   * @returns default apiResponse
+   *
+   */
+  public getDefaultErrorResponse = () => {
+    let apiResponse: ApiResponse = {
+      success: false,
+      notify: true,
+      type: ResponseType.ERROR,
+      msg: 'Could not processs request as invalid request received.',
+    };
+    return apiResponse;
+  };
 }

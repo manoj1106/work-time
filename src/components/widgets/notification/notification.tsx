@@ -30,7 +30,7 @@ export function NotificationIcon(props: NotificationIconProps) {
 }
 
 interface NotificationProps {
-  notify: boolean;
+  notify: boolean | undefined;
   type: ResponseType;
   msg: string;
 }

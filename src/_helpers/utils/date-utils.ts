@@ -1,3 +1,6 @@
+import { Consts } from '../consts/consts';
+import { StringUtils } from './string.utils';
+
 export class DateUtils {
   public static readonly DDMMYYYY_HIPHAN = 'dd-MM-yyyy';
   public static readonly YYYYMMDD_HIPHAN = 'yyyy-MM-dd';
@@ -79,4 +82,36 @@ export class DateUtils {
     const dayStr = day < 10 ? `0${day}` : day;
     return dayStr;
   }
+
+  public static parseDate = (dateToParse: string): Date => {
+    return this.parseDateWith(this.DDMMYYYY_HIPHAN, dateToParse);
+  };
+
+  public static parseDateWith = (
+    pattern: string,
+    dateToParse: string
+  ): Date => {
+    switch (pattern) {
+      case this.DDMMYYYY_HIPHAN:
+        return this.parseWithDDMMYYYY(dateToParse);
+    }
+    return new Date();
+  };
+
+  private static parseWithDDMMYYYY = (dateToParse: string) => {
+    const array = dateToParse.split('-');
+    return this.getDate(array[0], array[1], array[2]);
+  };
+
+  private static getDate = (day: string, month: string, year: string) => {
+    const d = parseInt(day);
+    const m = parseInt(month) - 1;
+    const y = parseInt(year);
+    const date = new Date(y, m, d);
+    return date;
+  };
+
+  public static getFullMonth = (month: number) => {
+    return Consts.MONTH_NAMES[month];
+  };
 }

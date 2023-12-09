@@ -81,4 +81,10 @@ export class NumberUtils {
     }
     return false;
   };
+
+  public static subtracton = (num1: number, num2: number): number => {
+    let subtraction = num1 - num2;
+    subtraction = +subtraction.toPrecision(2);
+    return subtraction;
+  };
 }

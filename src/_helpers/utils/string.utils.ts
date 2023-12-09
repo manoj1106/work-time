@@ -29,8 +29,11 @@ export class StringUtils {
    * true if the str is null or undefined or empty else return false
    *
    */
-  public static isBlank = (str: string) => {
-    return this.isNullOrUndefined(str) || Consts.EMPTY === str.trim();
+  public static isBlank = (str?: string) => {
+    if (!str) {
+      return true;
+    }
+    return this.isNullOrUndefined(str) || this.isEmpty(str);
   };
 
   /**
@@ -41,7 +44,7 @@ export class StringUtils {
    *
    */
   public static isEmpty = (str: string) => {
-    if (Consts.EMPTY === str.trim()) {
+    if (str.trim().length === 0) {
       return true;
     }
     return false;
@@ -55,8 +58,8 @@ export class StringUtils {
    * isEmpty(str) return false
    *
    */
-  public static isNotBlank = (str: string) => {
-    return !this.isBlank(str);
+  public static isNotBlank = (str: string | undefined) => {
+    return str && !this.isBlank(str);
   };
 
   /**

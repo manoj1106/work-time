@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { NewBooking } from '../models/new-booking.model';
 import { useInput } from './useInput';
 import NotificationContext from '@/context/notification/notification';
-import { StringUtils } from '../utils/string.utils';
+import { TimesheetType } from '../enums/timesheet.type';
 
-const initialNewBooking: NewBooking = {
-  type: undefined,
+export const initialNewBooking: NewBooking = {
+  type: TimesheetType.PLEASE_SELECT,
   date: '',
   fromDate: '',
   toDate: '',

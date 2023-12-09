@@ -152,7 +152,7 @@ export class DBRepository implements IDBRepository {
     return docs;
   };
 
-  private getObject = (doc: any) => {
+  public getObject = (doc: any) => {
     let result: any = {};
     if (doc) {
       for (const property in doc) {
