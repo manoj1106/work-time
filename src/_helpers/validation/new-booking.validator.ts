@@ -3,12 +3,22 @@ import { NewBooking } from '../models/new-booking.model';
 import { StringUtils } from '../utils/string.utils';
 import { PresentBookingValidator } from './present-booking.validator';
 import { TimesheetType } from '../enums/timesheet.type';
+import { PublicHolidayTypeBookingValidator } from './public-holiday-booking.validator';
+import { SickLeaveTypeBookingValidator } from './sick-leave.booking.validator';
 
 @injectable()
 export class NewBookingValidator {
   private presentBookingValidator: PresentBookingValidator;
-  public constructor(presentBookingValidator: PresentBookingValidator) {
+  private publicHolidayTypeBookingValidator: PublicHolidayTypeBookingValidator;
+  private sickLeaveTypeBookingValidator: SickLeaveTypeBookingValidator;
+  public constructor(
+    presentBookingValidator: PresentBookingValidator,
+    publicHolidayTypeBookingValidator: PublicHolidayTypeBookingValidator,
+    sickLeaveTypeBookingValidator: SickLeaveTypeBookingValidator
+  ) {
     this.presentBookingValidator = presentBookingValidator;
+    this.publicHolidayTypeBookingValidator = publicHolidayTypeBookingValidator;
+    this.sickLeaveTypeBookingValidator = sickLeaveTypeBookingValidator;
   }
 
   validateInputs = (inputs: NewBooking, setErrors: (errors: any) => void) => {
@@ -21,6 +31,14 @@ export class NewBookingValidator {
       switch (inputs.type) {
         case TimesheetType.PRESENT:
           bookingErrors = this.presentBookingValidator.validateInputs(inputs);
+          break;
+        case TimesheetType.SICK_LEAVE:
+          bookingErrors =
+            this.sickLeaveTypeBookingValidator.validateInputs(inputs);
+          break;
+        case TimesheetType.PUBLIC_HOLIDAY:
+          bookingErrors =
+            this.publicHolidayTypeBookingValidator.validateInputs(inputs);
           break;
       }
       errors = {

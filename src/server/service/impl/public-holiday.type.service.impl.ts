@@ -1,7 +1,6 @@
 'use server';
 
 import { injectable } from 'tsyringe';
-import { IPresentTypeService } from '../present.type.service';
 import { ApiResponse } from '@/_helpers/api/response.model';
 import { NewBooking } from '@/_helpers/models/new-booking.model';
 import { ResponseHandler } from '@/_helpers/api/response.handler';
@@ -11,7 +10,6 @@ import { TimeUtils } from '@/_helpers/utils/time-util';
 import { DateUtils } from '@/_helpers/utils/date-utils';
 import { WorktimeRepository } from '@/server/repository/impl/worktime.repository.impl';
 import { WorktimeConfig } from '@/_helpers/models/worktime.model';
-import { NumberUtils } from '@/_helpers/utils/number.utils';
 import { NewBookingRepository } from '@/server/repository/impl/new-booking.repository.impl';
 import { ErrorMsg } from '@/server/consts/error.msg.consts';
 import { MsgConsts } from '@/server/consts/msg.consts';
@@ -43,7 +41,9 @@ export class PublicHolidayTypeBookingService
   public savePublicHolidayTypeBooking = async (
     booking: NewBooking
   ): Promise<ApiResponse> => {
-    console.log('savePublicHolidayTypeBooking() - saving present type booking');
+    console.log(
+      'savePublicHolidayTypeBooking() - saving public holiday type booking'
+    );
     this.validatePublicHolidayTypeBooking(booking);
     const worktimeConfig = await this.worktimeRepository.findWorktimeConfig();
     if (!worktimeConfig) {

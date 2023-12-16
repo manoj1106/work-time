@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DateUtils } from '../utils/date-utils';
 
-export const useDatepicker = (initial = new Date()) => {
+export const useDatepicker = (initial?: Date) => {
   const [selectedDate, setSelectedDate] = useState(initial);
   const [formattedDate, setFormattedDate] = useState('');
 

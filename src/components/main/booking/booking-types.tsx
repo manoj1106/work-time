@@ -36,7 +36,14 @@ const BookingTypes = (props: BookingTypesProps) => {
         />
       );
     case TimesheetType.SICK_LEAVE:
-      return <SickLeaveBooking />;
+      return (
+        <SickLeaveBooking
+          setInputs={props.setInputs}
+          inputs={props.inputs}
+          handleChange={props.onChange}
+          errors={props.errors}
+        />
+      );
     case TimesheetType.TIME_COMPENSATION:
       return <TimeCompensationBooking />;
     case TimesheetType.VACATION:

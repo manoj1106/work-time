@@ -17,6 +17,7 @@ const format = DateUtils.DDMMYYYY_HIPHAN;
 const PublicHolidayBooking = (props: PublicHolidayBookingProps) => {
   const { selectedDate, handleDateChange } = useDatepicker();
   // setting the date on component load
+  /*
   useEffect(() => {
     const formattedDate = DateUtils.getFormattedDateWith(format, selectedDate);
     props.setInputs((currentInputs: any) => {
@@ -26,6 +27,7 @@ const PublicHolidayBooking = (props: PublicHolidayBookingProps) => {
       };
     });
   }, []);
+  */
 
   // handling the public holiday date change
   const handlePublicHolidaySelect = (date: Date, e: any) => {
